@@ -18,7 +18,47 @@ app = FastAPI(title="Mergington High School API",
 current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")
+        # Add more activities to the database
+        activities_to_add = {
+            "Basketball": {
+                "description": "Learn basketball skills and compete in friendly matches",
+                "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+                "max_participants": 15,
+                "participants": ["james@mergington.edu"]
+            },
+            "Tennis": {
+                "description": "Master tennis techniques and participate in tournaments",
+                "schedule": "Tuesdays and Thursdays, 3:30 PM - 5:00 PM",
+                "max_participants": 12,
+                "participants": ["sarah@mergington.edu"]
+            },
+            "Drama Club": {
+                "description": "Perform in theatrical productions and improve acting skills",
+                "schedule": "Wednesdays and Fridays, 4:00 PM - 5:30 PM",
+                "max_participants": 25,
+                "participants": ["lucy@mergington.edu", "tom@mergington.edu"]
+            },
+            "Art Studio": {
+                "description": "Explore various art mediums including painting and sculpture",
+                "schedule": "Mondays, 3:30 PM - 5:00 PM",
+                "max_participants": 18,
+                "participants": ["alice@mergington.edu"]
+            },
+            "Debate Team": {
+                "description": "Develop public speaking and critical thinking through competitive debates",
+                "schedule": "Thursdays, 4:00 PM - 5:30 PM",
+                "max_participants": 14,
+                "participants": ["robert@mergington.edu", "claire@mergington.edu"]
+            },
+            "Math Olympiad": {
+                "description": "Challenge yourself with advanced mathematics problems and competitions",
+                "schedule": "Saturdays, 10:00 AM - 12:00 PM",
+                "max_participants": 20,
+                "participants": ["alex@mergington.edu"]
+            }
+        }
 
+        activities.update(activities_to_add)
 # In-memory activity database
 activities = {
     "Chess Club": {
@@ -61,6 +101,10 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Validate student is not already signed up
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student is already signed up for this activity")
 
     # Add student
     activity["participants"].append(email)
