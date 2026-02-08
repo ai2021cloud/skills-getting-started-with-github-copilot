@@ -76,14 +76,40 @@ section h3 {
 
 .activity-card .participants-list {
   margin-top: 10px;
-  padding-left: 20px;
-  list-style: disc;
+  padding-left: 0;
+  list-style: none; /* hide default bullets */
 }
 
 .activity-card .participants-list li {
   margin-bottom: 6px;
   color: #444;
   font-size: 14px;
+}
+
+.activity-card .participants-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.participant-email {
+  flex: 1;
+  margin-right: 8px;
+  word-break: break-all;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #c62828;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  background-color: rgba(198, 40, 40, 0.08);
 }
 
 .activity-card .participants-list .no-participants {
